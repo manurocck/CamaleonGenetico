@@ -7,20 +7,25 @@ import { Color, Genoma } from './structs/structs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  // Propio de la interfaz
+  cambiarColor = false;
+  selected = false;
+
+
   title = 'CamaleonGenetico';
 
-  amarillo : Color =  { nombre : 'amarillo',  emoji : '🟡' };
-  azul : Color =      { nombre : 'azul',      emoji : '🔵' };
-  rojo : Color =      { nombre : 'rojo',      emoji : '🔴' };
-  verde : Color =     { nombre : 'verde',     emoji : '🟢' };
-  lila : Color =      { nombre : 'lila',      emoji : '🟣' };
+  amarillo : Color =  { nombre : 'yellow',  emoji : '🟡' };
+  azul : Color =      { nombre : 'blue',      emoji : '🔵' };
+  rojo : Color =      { nombre : 'red',      emoji : '🔴' };
+  verde : Color =     { nombre : 'green',     emoji : '🟢' };
+  lila : Color =      { nombre : 'purple',      emoji : '🟣' };
 
-  colores : Color[] = [this.amarillo, this.azul, this.rojo, this.verde, this.lila];
+  colores : Color[] = [this.rojo, this.amarillo, this.verde, this.azul, this.lila];
   
   // Lista de colores
   genoma : Genoma = { combinacion : [], aptitud : 0};
 
-  combinacionElegida = [this.amarillo, this.azul, this.rojo, this.verde, this.lila];
+  combinacionElegida = [this.rojo, this.amarillo, this.azul, this.amarillo, this.lila];
   
   // Reglas del juego
   constanteSize = 5;
@@ -175,31 +180,21 @@ export class AppComponent {
     var poblacionMinima = 100;
     var poblacionActual = this.generarPoblacionInicial();
 
-    // loop de generaciones
-    while(generacionActual < generacionMaxima){
-      this.hanGanado(poblacionActual);
+    // Loop de generaciones
+    while(generacionActual < generacionMaxima && this.hanGanado(poblacionActual).length === 0){
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
       
       var poblacionNueva = this.seleccionar(poblacionActual);
-      if(!poblacionNueva.every((element) => element !== undefined))
-      console.log("undefined en seleccionar");
-    
-    
-    poblacionNueva = this.cruzar(poblacionNueva);
-    if(!poblacionNueva.every((element) => element !== undefined))
-    console.log("undefined en cruzar");
-  
-  
-    poblacionNueva = this.mutar(poblacionNueva);
-    if(!poblacionNueva.every((element) => element !== undefined))
-      console.log("undefined en mutar");
-        
+      poblacionNueva = this.cruzar(poblacionNueva);
+      poblacionNueva = this.mutar(poblacionNueva);
       
+      // Se añaden los mejores de la generación anterior
       if(poblacionNueva.length < poblacionMinima){
         var antiguosCandidatos = poblacionMinima - poblacionNueva.length;
         poblacionNueva = poblacionNueva.concat(poblacionActual.slice(0, antiguosCandidatos));
       }
+
       poblacionActual = poblacionNueva;
       generacionActual++;
       console.log(
