@@ -1,6 +1,6 @@
 <!-- <div class="circular ui button"> Press me</div> -->
 
-<div class="container center">
+<div class="ui raised segments center">
     <div class="ui segment">
         <div class="ui center aligned header huge">
             Camaleón Genético
@@ -9,16 +9,19 @@
             <!--6 Botones de colores con semantic-ui-->
             <div class="ui buttons">
                 <button class="ui button"  
-                    *ngFor="let elem of combinacionElegida" 
-                    [ngClass]="selected ? 'active '+elem.nombre : elem.nombre"
-                    (click)="cambiarColor = true; selected = true;"
-                    (blur)="selected=false"
+                    *ngFor="let elem of combinacionElegida ; index as i" 
+                    [ngClass]="elem.nombre"
+                    (click)="cambiarColor = true; colorSeleccionado = i"
                 ></button>          
             </div>
         </div>
-        <div class="fluid ui secondary button"
-            (click)="ejecutarAlgoritmoGenetico()">
-            ¡ Jugar ! 
+        <div class="ui container center aligned">
+            <div class="ui secondary button large"
+                (click)="ejecutarAlgoritmoGenetico()"
+                [ngClass]="{'disabled': !hasGanado}"
+                >
+                ¡ Jugar ! 
+            </div>
         </div>
     </div>
     <!-- Cambia de colores -->
@@ -29,8 +32,23 @@
                 <button class="ui button"  
                     *ngFor="let elem of colores" 
                     [ngClass]="elem.nombre"
-                    (click)="cambiarColor = false;"
+                    (click)="cambiarColor = false; cambiarColorSeleccionado(elem)"
                 ></button>
+            </div>
+        </div>
+    </div>
+    <!-- Mostrar generaciones -->
+    <div class="ui segment" *ngIf="!hasGanado">
+        <div class="ui center aligned header"> Generación {{this.generacionActual}} </div>
+        <div class="ui center aligned container">
+
+                <div class="ui" *ngFor="let item of poblacionParaMostrar">
+                    <div class="ui horizontal circular label"  
+                        *ngFor="let color of item.combinacion" 
+                        [ngClass]="color.nombre"
+                    ></div>
+                </div>
+
         </div>
     </div>
 </div>

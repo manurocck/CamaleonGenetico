@@ -1,15 +1,23 @@
 import { Component } from '@angular/core';
 import { Color, Genoma } from './structs/structs';
 
+const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   // Propio de la interfaz
   cambiarColor = false;
-  selected = false;
+  colorSeleccionado = 0;
+
+  cambiarColorSeleccionado(color : Color){
+    this.combinacionElegida[this.colorSeleccionado] = color;
+  }
+  ///////////////////////
 
 
   title = 'CamaleonGenetico';
@@ -37,7 +45,7 @@ export class AppComponent {
   indiceSeleccion = 0.7; // porcentaje que dejamos de la población anterior
   generaciones = 100;
   pesoPosicionAptitud = 1;
-  pesoColorAptitud = 1;
+  pesoColorAptitud = 0;
   
   // Función para calcular la aptitud de un genoma
   aptitudPosicionCorrecta(genoma : Genoma){
@@ -172,16 +180,20 @@ export class AppComponent {
   }
 
   // Función para ejecutar el algoritmo genético
-  ejecutarAlgoritmoGenetico() {
+  generacionActual = 0;
+  poblacionParaMostrar : Genoma[] = [];
+  async ejecutarAlgoritmoGenetico() {
+    this.hasGanado = false;
+    this.generacionActual = 0;
+    
     console.log("Ejecutando algoritmo genético");
     // Variables de control
-    var generacionActual = 0;
     var generacionMaxima = 100;
     var poblacionMinima = 100;
     var poblacionActual = this.generarPoblacionInicial();
 
     // Loop de generaciones
-    while(generacionActual < generacionMaxima && this.hanGanado(poblacionActual).length === 0){
+    while(this.generacionActual < generacionMaxima && this.hanGanado(poblacionActual).length === 0){
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
       
@@ -196,16 +208,25 @@ export class AppComponent {
       }
 
       poblacionActual = poblacionNueva;
-      generacionActual++;
+      this.generacionActual++;
+      this.poblacionParaMostrar = poblacionActual.slice(0, 5);
+
+      await sleep(1000);
       console.log(
-        "Generación " + generacionActual + "\n"
+        "Generación " + this.generacionActual + "\n"
         + "--------------------------------------\n"
         + "Mejores candidatos: \n"
         + poblacionActual.slice(0, 5).map(genoma => genoma.combinacion.map(color => color.emoji).join('')).join('\n'));
     }
-    // Implementa el ciclo de generaciones y lógica principal del algoritmo genético aquí
+    
+    if(this.hanGanado(poblacionActual).length > 0){
+      this.hasGanado = true;
+      console.log("La computadora ha encontrado tu clave y es la siguiente :");
+      console.log(this.hanGanado(poblacionActual)[0].combinacion.map(color => color.emoji).join(''));
+    } 
   }
-
+  hasGanado = true;
   avanzar = false;
+  
   
 }
