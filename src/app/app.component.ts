@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Color, Genoma } from './structs/structs';
+import { CAMALEON_CONST, Color, Genoma } from './structs/structs';
 
 const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 
@@ -10,83 +10,56 @@ const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 })
 export class AppComponent {
 
-  // Propio de la interfaz
-  cambiarColor = false;
-  colorSeleccionado = 0;
-
-  cambiarColorSeleccionado(color : Color){
-    this.combinacionElegida[this.colorSeleccionado] = color;
-  }
-  ///////////////////////
-
-
-  title = 'CamaleonGenetico';
-
-  amarillo : Color =  { nombre : 'yellow',  emoji : '🟡' };
-  azul : Color =      { nombre : 'blue',      emoji : '🔵' };
-  rojo : Color =      { nombre : 'red',      emoji : '🔴' };
-  verde : Color =     { nombre : 'green',     emoji : '🟢' };
-  lila : Color =      { nombre : 'purple',      emoji : '🟣' };
-
-  colores : Color[] = [this.rojo, this.amarillo, this.verde, this.azul, this.lila];
-  
-  // Lista de colores
-  genoma : Genoma = { combinacion : [], aptitud : 0};
-
-  combinacionElegida = [this.rojo, this.amarillo, this.azul, this.amarillo, this.lila];
+  combinacionElegida : Color[] = [];
+  hasGanado = true;
   
   // Reglas del juego
   constanteSize = 5;
   constanteColores = 5;
   
   // Configuración algoritmo genético
-  poblacion = 10;
+  poblacionMaxima = 10;
   indiceMutacion = 0.05;
   indiceSeleccion = 0.7; // porcentaje que dejamos de la población anterior
   generaciones = 100;
   pesoPosicionAptitud = 1;
   pesoColorAptitud = 0;
   
-  // Función para calcular la aptitud de un genoma
-  aptitudPosicionCorrecta(genoma : Genoma){
-    var aptitud = 0;
-    this.combinacionElegida.forEach((color, index) => {
-      if (genoma.combinacion[index] === color) {
-        aptitud++;
+  // Condiciones iniciales
+  generacionActual = 0;
+  poblacionParaMostrar : Genoma[] = [];
+
+  // Verifica si se ha encontrado la combinación correcta
+  hanGanado(poblacion : Genoma[]) {
+    console.log("Comprobando si han ganado");
+    var hanGanado : Genoma[] = [];
+    poblacion.forEach( (genoma) => {
+      genoma.actualizarAptitud(this.combinacionElegida);
+        if(genoma.aptitud === this.constanteSize * this.pesoPosicionAptitud + this.constanteSize * this.pesoColorAptitud){
+          hanGanado.push(genoma);
+        }
       }
-    });
-    return aptitud;
-  }
-  aptitudColoresCorrectos(genoma : Genoma){
-    var aptitud = 0;
-    genoma.combinacion.forEach(color => {
-      if(this.combinacionElegida.includes(color)){
-        aptitud++;
-      }
-    })
-    return aptitud;
-  }
-  actualizarAptitud( genoma : Genoma){
-    console.log("Actualizando aptitud");
-    genoma.aptitud = this.pesoPosicionAptitud*this.aptitudPosicionCorrecta(genoma) + this.pesoColorAptitud*this.aptitudColoresCorrectos(genoma);
+    );
+    return hanGanado;
   }
   
-  // Función para generar una población inicial aleatoria
+  // * * * * * * * * * * * * * * * * * *
+  // ETAPAS DEL ALGORITMO GENÉTICO
   generarPoblacionInicial() {
     console.log("Generando población inicial");
     var poblacion : Genoma[] = [];
 
-    for (let index = 0; index < this.poblacion; index++) {
-      var genoma : Genoma = { combinacion : [], aptitud : 0 };
+    for (let index = 0; index < this.poblacionMaxima; index++) {
+      var genoma : Genoma = new Genoma();
+      // Generación de combinación aleatoria
       for (let index = 0; index < this.constanteSize; index++) {
         var random = Math.random()*100 % this.constanteColores;
-        genoma.combinacion.push(this.colores[Math.floor(random)]);
+        genoma.combinacion.push(CAMALEON_CONST.colores[Math.floor(random)]);
       }
       poblacion.push(genoma);
     }
     return poblacion;
   }
-  // Función para seleccionar individuos para la siguiente generación
   seleccionar(poblacion : Genoma[]) {
     console.log("Realizando selección de individuos");
     var poblacionSeleccionada : Genoma[] = [];
@@ -103,7 +76,7 @@ export class AppComponent {
           poblacion[i].aptitud/totalAptitud
         );
     }
-    while(poblacionSeleccionada.length < this.poblacion*this.indiceSeleccion){
+    while(poblacionSeleccionada.length < this.poblacionMaxima*this.indiceSeleccion){
       // 2. Generar un número aleatorio entre 0 y 1
       var random = Math.random();
       var index = 0;
@@ -118,27 +91,22 @@ export class AppComponent {
     }
     return poblacionSeleccionada;
   }
-  // Función para cruzar individuos seleccionados
   cruzar(poblacionSeleccionada : Genoma[]) {
     console.log("Cruzando individuos");
     var poblacionCruzada : Genoma[] = [];
 
     while(poblacionSeleccionada.length > 2){
-      // Selección de individuos a cruzar
-      
+     
+      // Selección de individuos a cruzar (par random)
       var indicePrimerCandidato = Math.random()*100 % poblacionSeleccionada.length;
       var primerCandidato : Genoma = poblacionSeleccionada.splice(indicePrimerCandidato, 1)[0];
       var indiceSegundoCandidato = Math.random()*100 % poblacionSeleccionada.length;
       var segundoCandidato : Genoma = poblacionSeleccionada.splice(indiceSegundoCandidato, 1)[0];
       
-      var genoma1 : Genoma = { combinacion : [], aptitud : 0 };
-      var genoma2 : Genoma = { combinacion : [], aptitud : 0 };
-      
-      
-      // console.log("1- Primer candidato : " + primerCandidato + "\n");
-      // console.log("2- Segundo candidato : " + segundoCandidato + "\n");
-        
-        // Algoritmo de cruce de colores
+      var genoma1 = new Genoma();
+      var genoma2 = new Genoma();
+
+      // Algoritmo de cruce de colores (máscara binaria aleatoria)
       for( var j = 0 ; j < this.constanteSize ; j++){
         if(Math.random()<0.5){
           genoma1.combinacion[j] = primerCandidato.combinacion[j];
@@ -152,36 +120,20 @@ export class AppComponent {
     }
     return poblacionCruzada;
   }
-  // Función para aplicar mutaciones a la población
   mutar(poblacionCruzada : Genoma[]) {
     console.log("Mutando individuos");
     poblacionCruzada.forEach(genoma => {
       for (let index = 0; index < this.constanteSize; index++) {
         if(Math.random()<this.indiceMutacion){
           var random = Math.random()*100 % this.constanteColores;
-          genoma.combinacion[index] = this.colores[Math.floor(random)];
+          genoma.combinacion[index] = CAMALEON_CONST.colores[Math.floor(random)];
         }
       }
     })
     return poblacionCruzada;
   }
-  // Función para verificar si se ha encontrado la combinación correcta
-  hanGanado(poblacion : Genoma[]) {
-    console.log("Comprobando si han ganado");
-    var hanGanado : Genoma[] = [];
-    poblacion.forEach( (genoma) => {
-      this.actualizarAptitud(genoma);
-        if(genoma.aptitud === this.constanteSize * this.pesoPosicionAptitud + this.constanteSize * this.pesoColorAptitud){
-          hanGanado.push(genoma);
-        }
-      }
-    );
-    return hanGanado;
-  }
-
-  // Función para ejecutar el algoritmo genético
-  generacionActual = 0;
-  poblacionParaMostrar : Genoma[] = [];
+ 
+  // EJECUCIÓN DEL ALGORITMO GENÉTICO
   async ejecutarAlgoritmoGenetico() {
     this.hasGanado = false;
     this.generacionActual = 0;
@@ -189,7 +141,6 @@ export class AppComponent {
     console.log("Ejecutando algoritmo genético");
     // Variables de control
     var generacionMaxima = 100;
-    var poblacionMinima = 100;
     var poblacionActual = this.generarPoblacionInicial();
 
     // Loop de generaciones
@@ -197,36 +148,32 @@ export class AppComponent {
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
       
-      var poblacionNueva = this.seleccionar(poblacionActual);
-      poblacionNueva = this.cruzar(poblacionNueva);
-      poblacionNueva = this.mutar(poblacionNueva);
+      var poblacionNueva = this.mutar(this.cruzar(this.seleccionar(poblacionActual)));
       
       // Se añaden los mejores de la generación anterior
-      if(poblacionNueva.length < poblacionMinima){
-        var antiguosCandidatos = poblacionMinima - poblacionNueva.length;
-        poblacionNueva = poblacionNueva.concat(poblacionActual.slice(0, antiguosCandidatos));
-      }
+      var antiguosCandidatos = this.poblacionMaxima - poblacionNueva.length;
+      poblacionNueva = poblacionNueva.concat(poblacionActual.slice(0, antiguosCandidatos));
 
       poblacionActual = poblacionNueva;
       this.generacionActual++;
-      this.poblacionParaMostrar = poblacionActual.slice(0, 5);
-
+      this.logEstadoActual(poblacionActual);
+      
       await sleep(1000);
-      console.log(
-        "Generación " + this.generacionActual + "\n"
-        + "--------------------------------------\n"
-        + "Mejores candidatos: \n"
-        + poblacionActual.slice(0, 5).map(genoma => genoma.combinacion.map(color => color.emoji).join('')).join('\n'));
     }
     
     if(this.hanGanado(poblacionActual).length > 0){
       this.hasGanado = true;
       console.log("La computadora ha encontrado tu clave y es la siguiente :");
       console.log(this.hanGanado(poblacionActual)[0].combinacion.map(color => color.emoji).join(''));
-    } 
+    }
   }
-  hasGanado = true;
-  avanzar = false;
-  
-  
+
+  logEstadoActual(poblacionActual : Genoma[]){
+    this.poblacionParaMostrar = poblacionActual.slice(0, 5);
+    console.log(
+      "Generación " + this.generacionActual + "\n"
+      + "--------------------------------------\n"
+      + "Mejores candidatos: \n"
+      + poblacionActual.slice(0, 5).map(genoma => genoma.combinacion.map(color => color.emoji).join('')).join('\n'));
+  }
 }
