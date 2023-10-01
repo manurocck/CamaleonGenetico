@@ -11,7 +11,8 @@ const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 export class AppComponent {
 
   combinacionElegida : Color[] = [];
-  hasGanado = true;
+  hasGanado = false;
+  jugando = false;
   
   // Reglas del juego
   constanteSize = 5;
@@ -28,9 +29,10 @@ export class AppComponent {
   // Condiciones iniciales
   generacionActual = 0;
   poblacionParaMostrar : Genoma[] = [];
+  ganador : Genoma = new Genoma();
 
   // Verifica si se ha encontrado la combinación correcta
-  hanGanado(poblacion : Genoma[]) {
+  fitrarGanadores(poblacion : Genoma[]) {
     console.log("Comprobando si han ganado");
     var hanGanado : Genoma[] = [];
     poblacion.forEach( (genoma) => {
@@ -135,6 +137,9 @@ export class AppComponent {
  
   // EJECUCIÓN DEL ALGORITMO GENÉTICO
   async ejecutarAlgoritmoGenetico() {
+    // Inicializar variables
+    this.ganador = new Genoma();
+    this.jugando = true;
     this.hasGanado = false;
     this.generacionActual = 0;
     
@@ -144,7 +149,7 @@ export class AppComponent {
     var poblacionActual = this.generarPoblacionInicial();
 
     // Loop de generaciones
-    while(this.generacionActual < generacionMaxima && this.hanGanado(poblacionActual).length === 0){
+    while(this.generacionActual < generacionMaxima && this.fitrarGanadores(poblacionActual).length === 0){
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
       
@@ -158,14 +163,16 @@ export class AppComponent {
       this.generacionActual++;
       this.logEstadoActual(poblacionActual);
       
-      await sleep(1000);
+      // await sleep(1000);
     }
     
-    if(this.hanGanado(poblacionActual).length > 0){
+    if(this.fitrarGanadores(poblacionActual).length > 0){
       this.hasGanado = true;
+      this.ganador = this.fitrarGanadores(poblacionActual)[0];
       console.log("La computadora ha encontrado tu clave y es la siguiente :");
-      console.log(this.hanGanado(poblacionActual)[0].combinacion.map(color => color.emoji).join(''));
+      console.log(this.ganador.combinacion.map(color => color.emoji).join(''));
     }
+    this.jugando = false;
   }
 
   logEstadoActual(poblacionActual : Genoma[]){

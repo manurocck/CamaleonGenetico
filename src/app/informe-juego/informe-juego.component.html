@@ -1,0 +1,13 @@
+<!-- Cambia de colores -->
+<div class="ui segment">
+    <div class="ui center aligned header"> El algoritmo adivinó tu combinación en {{cantGeneraciones}} generaciones </div>
+    <div class="ui center aligned small header"> Tu clave es la siguiente : </div>
+    <div class="ui center aligned container">
+        <div class="ui buttons">
+            <button class="ui button"  
+                *ngFor="let elem of combinacionGanadora" 
+                [ngClass]="elem.nombre"
+            ></button>
+        </div>
+    </div>
+</div>
