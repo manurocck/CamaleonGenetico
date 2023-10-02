@@ -1,2 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'semantic-ui-css/semantic.css';
+
+.dark{
+  background-color: #18181B;
+  color: white;
+}
+
+.center{
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.bar{
+  border-radius: 16px !important;
+  background-color: #fafafa;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #18181B;
+  min-height: 64px;
+}
+
+.red-circle{
+  background-color: #F87171 !important;
+}
+
+.orange-circle{
+  background-color: #fb923c !important;
+}
+
+.yellow-circle{
+  background-color: #FDE047 !important;
+}
+
+.green-circle{
+  background-color: #4ADE80 !important;
+}
+
+.blue-circle{
+  background-color: #38BDF8 !important;
+}
+
+.purple-circle{
+  background-color: #A78BFA !important;
+}
+
+.normal{
+  width: 32px !important;
+  height: 32px !important;
+}
