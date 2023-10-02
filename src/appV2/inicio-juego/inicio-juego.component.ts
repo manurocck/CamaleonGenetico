@@ -24,14 +24,17 @@ export class InicioJuegoComponent implements OnInit {
   }
 
   eliminarColorSeleccionado(i: number) {
+    if(this.jugando) return;
     this.combinacionElegida.splice(i, 1);
   }
 
   addColorSeleccionado(color: Color) {
+    if(this.jugando) return;
     this.combinacionElegida.push(color);
   }
 
   jugarPartida() {
+    if(this.jugando) return;
     this.eligeCombinacion.emit(this.combinacionElegida);
     this.jugar.emit(true);
   }
