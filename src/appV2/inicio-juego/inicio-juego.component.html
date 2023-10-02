@@ -1,0 +1,36 @@
+<div class="spacing-xl"></div>
+
+
+<!-- Barra de colores -->
+<div class="ui center segment row bar">
+    <a class="ui empty circular label normal"  
+        *ngFor="let elem of combinacionElegida ; index as i" 
+        [ngClass]="elem.nombre + '-circle'"
+        (click)="eliminarColorSeleccionado(i)"
+        ></a>
+</div>
+
+<div class="spacing-xl"></div>
+
+<!-- Añadir colores -->
+<div class="ui center row">
+    <a class="ui empty circular label grande"  
+        *ngFor="let elem of colores" 
+        [ngClass]="elem.nombre + '-circle'"
+        (click)="addColorSeleccionado(elem)"
+        ></a>
+</div>
+
+<div class="spacing-xl"></div>
+
+<!-- Jugar -->
+<div class="ui container center aligned">
+    <div class="ui button bar huge"
+        (click)="jugarPartida()"
+        [ngClass]="{'disabled': jugando}"
+        >
+        ¡ Jugar ! 
+    </div>
+</div>
+
+<div class="spacing-xl"></div>

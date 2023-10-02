@@ -1,0 +1,27 @@
+<app-header></app-header>
+<app-inicio-juego 
+    (eligeCombinacion)="combinacionElegida=$event"
+    (jugar)="ejecutarAlgoritmoGenetico()"
+    [jugando] = "jugando"
+    ></app-inicio-juego>
+<div class="ui raised segments center " *ngIf="jugando || hasGanado">
+    <!-- Mostrar procedimiento -->
+    <div class="ui segment bar" *ngIf="jugando">
+        <div class="ui center aligned header"> Generación {{this.generacionActual}} </div>
+        <div class="ui center aligned container">
+            <div class="ui" *ngFor="let item of poblacionParaMostrar">
+                <div class="ui horizontal circular label"  
+                    *ngFor="let color of item.combinacion" 
+                    [ngClass]="color.nombre + '-circle'"
+                ></div>
+            </div>
+        </div>
+    </div>
+    <!-- Mostrar ganador -->
+    <div class="ui segment bar" *ngIf="hasGanado">
+        <app-informe-juego 
+            [combinacionGanadora]="ganador.combinacion"
+            [cantGeneraciones]="generacionActual"
+            ></app-informe-juego>
+    </div>
+</div>

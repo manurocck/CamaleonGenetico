@@ -1,0 +1,10 @@
+.spacing-xl{
+  margin-top: 56px;
+}
+
+.grande{
+  width: 64px !important;
+  height: 64px !important;
+  margin-left: 8px;
+  margin-right: 8px;
+}
