@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CAMALEON_CONST, Color, Genoma } from './structs/structs';
+import { AptitudAlgoritmo, CAMALEON_CONST, Color, GenomaAlgoritmo, GenomaCamaleon } from './structs/structs';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -26,13 +26,13 @@ export class AppComponent {
 
   // Condiciones iniciales
   generacionActual = 0;
-  poblacionParaMostrar: Genoma[] = [];
-  ganador: Genoma = new Genoma();
+  poblacionParaMostrar: GenomaCamaleon[] = [];
+  ganador: GenomaCamaleon = new GenomaCamaleon();
 
   // Verifica si se ha encontrado la combinación correcta
-  fitrarGanadores(poblacion: Genoma[]) {
-    console.log('Comprobando si han ganado');
-    var hanGanado: Genoma[] = [];
+  fitrarGanadores(poblacion: GenomaCamaleon[]) {
+    // console.log('Comprobando si han ganado');
+    var hanGanado: GenomaCamaleon[] = [];
     poblacion.forEach((genoma) => {
       genoma.actualizarAptitud(this.combinacionElegida);
       if (
@@ -49,11 +49,11 @@ export class AppComponent {
   // * * * * * * * * * * * * * * * * * *
   // ETAPAS DEL ALGORITMO GENÉTICO
   generarPoblacionInicial() {
-    console.log('Generando población inicial');
-    var poblacion: Genoma[] = [];
+    // console.log('Generando población inicial');
+    var poblacion: GenomaCamaleon[] = [];
 
     for (let index = 0; index < this.poblacionMaxima; index++) {
-      var genoma: Genoma = new Genoma();
+      var genoma: GenomaCamaleon = new GenomaCamaleon();
       // Generación de combinación aleatoria
       for (let index = 0; index < this.combinacionElegida.length; index++) {
         var random = (Math.random() * 100) % this.constanteColores;
@@ -63,9 +63,9 @@ export class AppComponent {
     }
     return poblacion;
   }
-  seleccionar(poblacion: Genoma[]) {
-    console.log('Realizando selección de individuos');
-    var poblacionSeleccionada: Genoma[] = [];
+  seleccionar(poblacion: GenomaCamaleon[]) {
+    // console.log('Realizando selección de individuos');
+    var poblacionSeleccionada: GenomaCamaleon[] = [];
     var totalAptitud = 0;
     poblacion.forEach((genoma) => {
       totalAptitud += genoma.aptitud;
@@ -96,27 +96,27 @@ export class AppComponent {
     }
     return poblacionSeleccionada;
   }
-  cruzar(poblacionSeleccionada: Genoma[]) {
-    console.log('Cruzando individuos');
-    var poblacionCruzada: Genoma[] = [];
+  cruzar(poblacionSeleccionada: GenomaCamaleon[]) {
+    // console.log('Cruzando individuos');
+    var poblacionCruzada: GenomaCamaleon[] = [];
 
     while (poblacionSeleccionada.length > 2) {
       // Selección de individuos a cruzar (par random)
       var indicePrimerCandidato =
         (Math.random() * 100) % poblacionSeleccionada.length;
-      var primerCandidato: Genoma = poblacionSeleccionada.splice(
+      var primerCandidato: GenomaCamaleon = poblacionSeleccionada.splice(
         indicePrimerCandidato,
         1
       )[0];
       var indiceSegundoCandidato =
         (Math.random() * 100) % poblacionSeleccionada.length;
-      var segundoCandidato: Genoma = poblacionSeleccionada.splice(
+      var segundoCandidato: GenomaCamaleon = poblacionSeleccionada.splice(
         indiceSegundoCandidato,
         1
       )[0];
 
-      var genoma1 = new Genoma();
-      var genoma2 = new Genoma();
+      var genoma1 = new GenomaCamaleon();
+      var genoma2 = new GenomaCamaleon();
 
       // Algoritmo de cruce de colores (máscara binaria aleatoria)
       for (var j = 0; j < this.combinacionElegida.length; j++) {
@@ -132,8 +132,8 @@ export class AppComponent {
     }
     return poblacionCruzada;
   }
-  mutar(poblacionCruzada: Genoma[]) {
-    console.log('Mutando individuos');
+  mutar(poblacionCruzada: GenomaCamaleon[]) {
+    // console.log('Mutando individuos');
     poblacionCruzada.forEach((genoma) => {
       for (let index = 0; index < this.combinacionElegida.length; index++) {
         if (Math.random() < this.indiceMutacion) {
@@ -147,14 +147,18 @@ export class AppComponent {
   }
 
   // EJECUCIÓN DEL ALGORITMO GENÉTICO
-  async ejecutarAlgoritmoGenetico() {
+  // finds the combination
+  async ejecutarCamaleonGenetico(configuracion : GenomaAlgoritmo) : Promise<AptitudAlgoritmo>{
     // Inicializar variables
-    this.ganador = new Genoma();
+    this.indiceSeleccion = configuracion.selectionIndex;
+    this.indiceMutacion = configuracion.mutationIndex;
+
+    this.ganador = new GenomaCamaleon();
     this.jugando = true;
     this.hasGanado = false;
     this.generacionActual = 0;
 
-    console.log('Ejecutando algoritmo genético');
+    // console.log('Ejecutando algoritmo genético');
     // Variables de control
     var generacionMaxima = 100;
     var poblacionActual = this.generarPoblacionInicial();
@@ -167,9 +171,11 @@ export class AppComponent {
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
 
-      var poblacionNueva = this.mutar(
-        this.cruzar(this.seleccionar(poblacionActual))
-      );
+      var poblacionNueva = 
+                          this.mutar(
+                            this.cruzar(
+                              this.seleccionar(poblacionActual))
+                          );
 
       // Se añaden los mejores de la generación anterior
       var antiguosCandidatos = this.poblacionMaxima - poblacionNueva.length;
@@ -181,34 +187,98 @@ export class AppComponent {
       this.generacionActual++;
       this.logEstadoActual(poblacionActual);
 
-      await sleep(200);
+      await sleep(0);
     }
 
     if (this.fitrarGanadores(poblacionActual).length > 0) {
       this.hasGanado = true;
       this.ganador = this.fitrarGanadores(poblacionActual)[0];
-      console.log('La computadora ha encontrado tu clave y es la siguiente :');
-      console.log(
-        this.ganador.combinacion.map((color) => color.emoji).join('')
-      );
+      // console.log('La computadora ha encontrado tu clave y es la siguiente :');
+      // console.log(
+      //   this.ganador.combinacion.map((color) => color.emoji).join('')
+      // );
+    }{
+      // console.log("La computadora no ha encontrado tu clave");
     }
     this.jugando = false;
+
+    return {
+      totalGeneraciones: this.generacionActual,
+      success: this.hasGanado ? 1 : 0,
+    }
   }
 
-  logEstadoActual(poblacionActual: Genoma[]) {
+  async ejecutarProgramaGenetico(){
+    var poblacionPrograma = 10;
+    var poblacion : GenomaAlgoritmo[] = [];
+    
+    // Initialize population with random values
+    for(let i=0; i<poblacionPrograma; i++){
+      var genomaPrograma : GenomaAlgoritmo ={
+        selectionIndex: Math.random(),
+        mutationIndex: Math.random(),
+        aptitud : {
+          totalGeneraciones: 0, // promedioGeneraciones
+          success: 0 //             succesRate
+        }
+      }
+      // genomaPrograma.crossOverIndex = 0.2;
+      poblacion.push(genomaPrograma);
+    }
+
+    // Give a score to each individual
+    poblacion.forEach(async (altParametros,index) => {
+      var sumaCorridas = 0;
+      var sumaExitos = 0;
+      console.log(">>>>>>>>>>>>>>>>>");
+      console.log(">>>>> GENOMA NÚMERO <"+(index+1)+">");
+      console.log((index+1)+">>>>> INFORMACIÓN DE PARTIDAS");
+      for(let i = 0; i < 10; i++){
+        var funcionAptitud  = await this.ejecutarCamaleonGenetico(altParametros);
+        sumaCorridas += funcionAptitud.totalGeneraciones;
+        sumaExitos += funcionAptitud.success;
+        console.log((index+1)+"> Llegué hasta la generación " + funcionAptitud.totalGeneraciones);
+      }
+      altParametros.aptitud.success = (sumaExitos!=0)? sumaExitos/10 : 0;
+      altParametros.aptitud.totalGeneraciones = (sumaCorridas!=0)? sumaExitos/10 : 0;
+      
+      console.log((index+1)+">>>>> RESULTADOS");
+      console.log((index+1)+"> Total de exitos (over 10): " + sumaExitos);
+      if(sumaCorridas!=0)
+        console.log((index+1)+"> Promedio de generaciones : " + sumaCorridas/10);
+      else 
+        console.log((index+1)+"> Promedio de generaciones : 0");
+      console.log((index+1)+">>>>> PARÁMETROS UTILIZADOS");
+      console.log((index+1)+"> Selection Index : " + altParametros.selectionIndex);
+      console.log((index+1)+"> Mutation Index :" + altParametros.mutationIndex);
+    });
+
+    // Cross over the best individuals
+    poblacion.sort((a,b) => (b.aptitud.success*b.aptitud.totalGeneraciones) 
+                          - (a.aptitud.success*a.aptitud.totalGeneraciones) );
+    var poblacionNueva : GenomaAlgoritmo[] = [];
+
+
+    
+    // Mutate the individuals
+
+    // y repetir
+  }
+
+  logEstadoActual(poblacionActual: GenomaCamaleon[]) {
     this.poblacionParaMostrar = poblacionActual.slice(0, 5);
-    console.log(
-      'Generación ' +
-        this.generacionActual +
-        '\n' +
-        '--------------------------------------\n' +
-        'Mejores candidatos: \n' +
-        poblacionActual
-          .slice(0, 5)
-          .map((genoma) =>
-            genoma.combinacion.map((color) => color.emoji).join('')
-          )
-          .join('\n')
-    );
+    // console.log(
+    //   'Generación ' +
+    //     this.generacionActual +
+    //     '\n' +
+    //     '--------------------------------------\n' +
+    //     'Mejores candidatos: \n' +
+    //     poblacionActual
+    //       .slice(0, 5)
+    //       .map((genoma) =>
+    //         genoma.combinacion.map((color) => color.emoji).join('')
+    //       )
+    //       .join('\n')
+    // );
   }
 }

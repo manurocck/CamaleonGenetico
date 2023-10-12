@@ -33,7 +33,7 @@ export class AppComponent {
 
   // Verifica si se ha encontrado la combinación correcta
   fitrarGanadores(poblacion : Genoma[]) {
-    console.log("Comprobando si han ganado");
+    // console.log("Comprobando si han ganado");
     var hanGanado : Genoma[] = [];
     poblacion.forEach( (genoma) => {
       genoma.actualizarAptitud(this.combinacionElegida);
@@ -48,7 +48,7 @@ export class AppComponent {
   // * * * * * * * * * * * * * * * * * *
   // ETAPAS DEL ALGORITMO GENÉTICO
   generarPoblacionInicial() {
-    console.log("Generando población inicial");
+    // console.log("Generando población inicial");
     var poblacion : Genoma[] = [];
 
     for (let index = 0; index < this.poblacionMaxima; index++) {
@@ -63,7 +63,7 @@ export class AppComponent {
     return poblacion;
   }
   seleccionar(poblacion : Genoma[]) {
-    console.log("Realizando selección de individuos");
+    // console.log("Realizando selección de individuos");
     var poblacionSeleccionada : Genoma[] = [];
     var totalAptitud = 0;
     poblacion.forEach(genoma => {
@@ -94,7 +94,7 @@ export class AppComponent {
     return poblacionSeleccionada;
   }
   cruzar(poblacionSeleccionada : Genoma[]) {
-    console.log("Cruzando individuos");
+    // console.log("Cruzando individuos");
     var poblacionCruzada : Genoma[] = [];
 
     while(poblacionSeleccionada.length > 2){
@@ -123,7 +123,7 @@ export class AppComponent {
     return poblacionCruzada;
   }
   mutar(poblacionCruzada : Genoma[]) {
-    console.log("Mutando individuos");
+    // console.log("Mutando individuos");
     poblacionCruzada.forEach(genoma => {
       for (let index = 0; index < this.constanteSize; index++) {
         if(Math.random()<this.indiceMutacion){
@@ -143,7 +143,7 @@ export class AppComponent {
     this.hasGanado = false;
     this.generacionActual = 0;
     
-    console.log("Ejecutando algoritmo genético");
+    // console.log("Ejecutando algoritmo genético");
     // Variables de control
     var generacionMaxima = 100;
     var poblacionActual = this.generarPoblacionInicial();
@@ -169,18 +169,18 @@ export class AppComponent {
     if(this.fitrarGanadores(poblacionActual).length > 0){
       this.hasGanado = true;
       this.ganador = this.fitrarGanadores(poblacionActual)[0];
-      console.log("La computadora ha encontrado tu clave y es la siguiente :");
-      console.log(this.ganador.combinacion.map(color => color.emoji).join(''));
+      // console.log("La computadora ha encontrado tu clave y es la siguiente :");
+      // console.log(this.ganador.combinacion.map(color => color.emoji).join(''));
     }
     this.jugando = false;
   }
 
   logEstadoActual(poblacionActual : Genoma[]){
     this.poblacionParaMostrar = poblacionActual.slice(0, 5);
-    console.log(
-      "Generación " + this.generacionActual + "\n"
-      + "--------------------------------------\n"
-      + "Mejores candidatos: \n"
-      + poblacionActual.slice(0, 5).map(genoma => genoma.combinacion.map(color => color.emoji).join('')).join('\n'));
+  //   console.log(
+  //     "Generación " + this.generacionActual + "\n"
+  //     + "--------------------------------------\n"
+  //     + "Mejores candidatos: \n"
+  //     + poblacionActual.slice(0, 5).map(genoma => genoma.combinacion.map(color => color.emoji).join('')).join('\n'));
   }
 }

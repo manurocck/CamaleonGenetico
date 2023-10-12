@@ -3,7 +3,7 @@ export interface Color {
   emoji: string;
 }
 
-export class Genoma {
+export class GenomaCamaleon {
   combinacion: Color[] = [];
   aptitud: number = 0;
 
@@ -22,6 +22,18 @@ export class Genoma {
   }
 
   // agregar aptitud por colores correctos
+}
+
+export interface GenomaAlgoritmo {
+  selectionIndex : number; // porcentaje que dejamos de la población anterior
+  mutationIndex : number ; // porcentaje de mutación
+  // crossOverIndex : number = 0.2; // porcentaje de cruce
+  aptitud : AptitudAlgoritmo;
+}
+export interface AptitudAlgoritmo {
+  totalGeneraciones: number; // total sum of generations
+  success: number; // total times the algorithm succeeded
+  // varianzaPromedioEntreGeneraciones: number; // variance between generations
 }
 
 export class CAMALEON_CONST {

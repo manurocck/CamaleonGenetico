@@ -1,7 +1,8 @@
 <app-header></app-header>
+<!-- <app-presentacion></app-presentacion> -->
 <app-inicio-juego 
     (eligeCombinacion)="combinacionElegida=$event"
-    (jugar)="ejecutarAlgoritmoGenetico()"
+    (jugar)="ejecutarProgramaGenetico()"
     [jugando] = "jugando"
     ></app-inicio-juego>
 <div class="ui raised segments center " *ngIf="jugando || hasGanado">
