@@ -1,51 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'semantic-ui-css/semantic.css';
 
-.dark{
+body{
+  /* Background color same visual studio gray*/
   background-color: #18181B;
-  color: white;
+}
+.m-2{
+  margin-top: 2%;
 }
 
-.center{
-  display: flex; 
-  justify-content: center; 
-  align-items: center;
-}
-
-.bar{
+.segment{
   border-radius: 16px !important;
-  background-color: #fafafa;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  color: #18181B;
-  min-height: 64px;
 }
 
-.red-circle{
+/* Colors */
+
+.red{
+  color: #F87171 !important;
+}
+.orange{
+  color: #fb923c !important;
+}
+.yellow{
+  color: #FDE047 !important;
+}
+.green{
+  color: #4ADE80 !important;
+}
+.blue{
+  color: #38BDF8 !important;
+}
+.purple{
+  color: #A78BFA !important;
+}
+.red-bg{
   background-color: #F87171 !important;
 }
-
-.orange-circle{
+.orange-bg{
   background-color: #fb923c !important;
 }
-
-.yellow-circle{
+.yellow-bg{
   background-color: #FDE047 !important;
 }
-
-.green-circle{
+.green-bg{
   background-color: #4ADE80 !important;
 }
-
-.blue-circle{
+.blue-bg{
   background-color: #38BDF8 !important;
 }
-
-.purple-circle{
+.purple-bg{
   background-color: #A78BFA !important;
-}
-
-.normal{
-  width: 32px !important;
-  height: 32px !important;
 }

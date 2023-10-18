@@ -4,6 +4,17 @@ export interface Color {
   emoji: string;
 }
 
+export class CAMALEON_CONST {
+  public static amarillo : Color =  { nombre : 'yellow',    emoji : '🟡' };
+  public static azul : Color =      { nombre : 'blue',      emoji : '🔵' };
+  public static rojo : Color =      { nombre : 'red',       emoji : '🔴' };
+  public static verde : Color =     { nombre : 'green',     emoji : '🟢' };
+  public static lila : Color =      { nombre : 'purple',    emoji : '🟣' };
+  
+  public static colores : Color[] = [this.rojo, this.amarillo, this.verde, this.azul, this.lila];
+  public static combinacionDefault : Color[] = [this.rojo, this.amarillo, this.azul, this.amarillo, this.lila];
+}
+
 export class Genoma {
   combinacion : Color[] = [];
   aptitud: number = 0;
@@ -23,15 +34,4 @@ export class Genoma {
   }
 
   // agregar aptitud por colores correctos
-}
-
-export class CAMALEON_CONST {
-  public static amarillo : Color =  { nombre : 'yellow',  emoji : '🟡' };
-  public static azul : Color =      { nombre : 'blue',      emoji : '🔵' };
-  public static rojo : Color =      { nombre : 'red',      emoji : '🔴' };
-  public static verde : Color =     { nombre : 'green',     emoji : '🟢' };
-  public static lila : Color =      { nombre : 'purple',      emoji : '🟣' };
-  
-  public static colores : Color[] = [this.rojo, this.amarillo, this.verde, this.azul, this.lila];
-  public static combinacionDefault : Color[] = [this.rojo, this.amarillo, this.azul, this.amarillo, this.lila];
 }

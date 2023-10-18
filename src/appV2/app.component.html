@@ -1,28 +1,46 @@
+<!-- Título de la página -->
 <app-header></app-header>
-<!-- <app-presentacion></app-presentacion> -->
+<!-- Seleccion de clave -->
 <app-inicio-juego 
     (eligeCombinacion)="combinacionElegida=$event"
     (jugar)="ejecutarProgramaGenetico()"
     [jugando] = "jugando"
-    ></app-inicio-juego>
-<div class="ui raised segments center " *ngIf="jugando || hasGanado">
+></app-inicio-juego>
+
+<div class="ui two column stackable grid container">
     <!-- Mostrar procedimiento -->
-    <div class="ui segment bar" *ngIf="jugando">
-        <div class="ui center aligned header"> Generación {{this.generacionActual}} </div>
-        <div class="ui center aligned container">
-            <div class="ui" *ngFor="let item of poblacionParaMostrar">
-                <div class="ui horizontal circular label"  
-                    *ngFor="let color of item.combinacion" 
-                    [ngClass]="color.nombre + '-circle'"
-                ></div>
+    <div class="eight wide column">
+        <div class="ui center aligned container" *ngIf="jugando || hasGanado">
+            <div class="ui center aligned segment container">
+                <div class="ui header"> Generación {{this.generacionActual}} </div>
+                <div class="ui center aligned container">
+                    <div class="ui" *ngFor="let item of poblacionParaMostrar">
+                        <div class="ui horizontal circular label"  
+                        *ngFor="let color of item.combinacion" 
+                        [ngClass]="color.nombre+'-bg'"
+                        ></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- Mostrar ganador -->
-    <div class="ui segment bar" *ngIf="hasGanado">
-        <app-informe-juego 
+    <div class="wight wide column">
+        <app-informe-juego
+            class="ui center aligned container"
+            [hasGanado] = "hasGanado"
             [combinacionGanadora]="ganador.combinacion"
             [cantGeneraciones]="generacionActual"
-            ></app-informe-juego>
+            >
+        </app-informe-juego>
     </div>
+</div>
+
+
+
+
+<!-- OLD -->
+<!-- <app-presentacion></app-presentacion> -->
+<div class="ui raised segments center " *ngIf="jugando || hasGanado">
+    
 </div>

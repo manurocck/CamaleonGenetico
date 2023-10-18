@@ -1,34 +1,26 @@
-<div class="ui center aligned header huge">
-    Camaleón Genético
-</div>
-<div class="ui centered card">
-    <!--6 Botones de colores con semantic-ui-->
-    <div class="ui buttons">
-        <button class="ui button"  
+<div class="ui center aligned container">
+    <div class="text">
+        <span class="red">Cam</span>
+        <span class="orange">ale</span>
+        <span class="yellow">on G</span>
+        <span class="green">en</span>
+        <span class="blue">éti</span>
+        <span class="purple">co</span>
+    </div>
+    <div class="ui center aligned segment">
+        <a class="ui circular label huge"
             *ngFor="let elem of combinacionElegida ; index as i" 
-            [ngClass]="elem.nombre"
-            (click)="cambiarColor = true; colorSeleccionado = i"
-            ></button>          
+            [ngClass]="elem.nombre + '-bg'"
+            >
+        </a>
     </div>
-</div>
-<!-- Cambia de colores -->
-<div class="ui segment" *ngIf="cambiarColor && !jugando">
-    <div class="ui center aligned header"> Selecciona el nuevo color </div>
-    <div class="ui center aligned container">
-        <div class="ui buttons">
-            <button class="ui button"  
-                *ngFor="let elem of colores" 
-                [ngClass]="elem.nombre"
-                (click)="cambiarColor = false; cambiarColorSeleccionado(elem)"
-            ></button>
-        </div>
-    </div>
-</div>
-<div class="ui container center aligned">
-    <div class="ui secondary button large"
-        (click)="jugarPartida(); cambiarColor=false"
-        [ngClass]="{'disabled': jugando}"
+    <div class="ui center aligned container selector">
+        <!-- Añadir colores -->
+        <a class="ui circular label massive selector"  
+        *ngFor="let elem of colores" 
+        [ngClass]="elem.nombre + '-bg'"
         >
-        ¡ Jugar ! 
+    </a>
     </div>
 </div>
+

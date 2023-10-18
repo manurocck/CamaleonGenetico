@@ -1,36 +1,29 @@
-<div class="spacing-xl"></div>
-
-
-<!-- Barra de colores -->
-<div class="ui center segment row bar">
-    <a class="ui empty circular label normal"  
-        *ngFor="let elem of combinacionElegida ; index as i" 
-        [ngClass]="elem.nombre + '-circle'"
-        (click)="eliminarColorSeleccionado(i)"
-        ></a>
-</div>
-
-<div class="spacing-xl"></div>
-
-<!-- Añadir colores -->
-<div class="ui center row">
-    <a class="ui empty circular label grande"  
+<!-- NEW -->
+<div class="ui center aligned container m-2">
+    <!-- Combinación elegida -->
+    <div class="ui center aligned text-secondary segment">
+        <div class="ui disabled header large descripcion" *ngIf="combinacionElegida.length==0">
+            Elija algún color para comenzar</div>
+        <a class="ui circular label huge"
+            *ngFor="let elem of combinacionElegida ; index as i" 
+            [ngClass]="elem.nombre + '-bg'"
+            (click)="eliminarColorSeleccionado(i)"
+            >
+        </a>
+    </div>
+    <!-- Añadir colores -->
+    <div class="ui center aligned container selector">
+        <a class="ui circular label massive selector"  
         *ngFor="let elem of colores" 
-        [ngClass]="elem.nombre + '-circle'"
+        [ngClass]="elem.nombre + '-bg'"
         (click)="addColorSeleccionado(elem)"
-        ></a>
-</div>
-
-<div class="spacing-xl"></div>
-
-<!-- Jugar -->
-<div class="ui container center aligned">
-    <div class="ui button bar huge"
+        >
+    </a>
+    </div>
+    <div class="ui primary button bar huge"
         (click)="jugarPartida()"
-        [ngClass]="{'disabled': jugando}"
+        [ngClass]="{'disabled': jugando || combinacionElegida.length==0}"
         >
         ¡ Jugar ! 
     </div>
 </div>
-
-<div class="spacing-xl"></div>

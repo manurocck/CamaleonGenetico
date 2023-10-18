@@ -1,53 +1,15 @@
-.red-text{
-  color: #F87171;
+.text{
   text-align: center;
-  font-size: 48px;
+  font-size: 3.5em;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-
-.orange-text{
-  color: #fb923c;
-  text-align: center;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+@media screen and (max-width: 700px) {
+    .text{
+        font-size: 2.5em;
+    }   
 }
-
-.yellow-text{
-  color: #FDE047;
-  text-align: center;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.green-text{
-  color: #4ADE80;
-  text-align: center;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.blue-text{
-  color: #38BDF8;
-  text-align: center;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.purple-text{
-  color: #A78BFA;
-  text-align: center;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+.ui.container{
+    margin-top: 10%;
 }

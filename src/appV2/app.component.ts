@@ -163,7 +163,7 @@ export class AppComponent {
     var generacionMaxima = 100;
     var poblacionActual = this.generarPoblacionInicial();
 
-    // Loop de generaciones
+    // Loop generacional
     while (
       this.generacionActual < generacionMaxima &&
       this.fitrarGanadores(poblacionActual).length === 0
@@ -171,13 +171,12 @@ export class AppComponent {
       // Se ordenan según aptitud
       poblacionActual.sort((a, b) => b.aptitud - a.aptitud);
 
-      var poblacionNueva = 
-                          this.mutar(
-                            this.cruzar(
-                              this.seleccionar(poblacionActual))
-                          );
+      //      Avanzar 1 generación 
+      var poblacionNueva : GenomaCamaleon[];
+      poblacionNueva =  this.mutar( this.cruzar( this.seleccionar(poblacionActual) ));
 
       // Se añaden los mejores de la generación anterior
+      // Acá deberían agregarse al azar de la generación anterior, no a los mejores
       var antiguosCandidatos = this.poblacionMaxima - poblacionNueva.length;
       poblacionNueva = poblacionNueva.concat(
         poblacionActual.slice(0, antiguosCandidatos)

@@ -1,0 +1,23 @@
+.text{
+  text-align: center;
+  font-size: 3.5em;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+@media screen and (max-width: 700px) {
+    .text{
+        font-size: 2.5em;
+    }   
+}
+.container{
+    margin-top: 10%;
+}
+.ui.label.massive{
+    gap: 10%;
+}
+.selector{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+}

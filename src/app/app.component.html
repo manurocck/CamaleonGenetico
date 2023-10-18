@@ -1,31 +1,25 @@
-<!-- <div class="circular ui button"> Press me</div> -->
-
-<div class="ui raised segments center">
-    <!-- Seleccion de clave -->
-    <div class="ui segment">
-        <app-inicio-juego 
-            (eligeCombinacion)="combinacionElegida=$event"
-            (jugar)="ejecutarAlgoritmoGenetico()"
-            [jugando] = "jugando"
-            ></app-inicio-juego>
-    </div>
-    <!-- Mostrar procedimiento -->
-    <div class="ui segment" *ngIf="jugando">
-        <div class="ui center aligned header"> Generación {{this.generacionActual}} </div>
-        <div class="ui center aligned container">
-            <div class="ui" *ngFor="let item of poblacionParaMostrar">
-                <div class="ui horizontal circular label"  
-                    *ngFor="let color of item.combinacion" 
-                    [ngClass]="color.nombre"
-                ></div>
-            </div>
+<!-- Seleccion de clave -->
+<app-inicio-juego 
+    (eligeCombinacion)="combinacionElegida=$event"
+    (jugar)="ejecutarAlgoritmoGenetico()"
+    [jugando] = "jugando"
+></app-inicio-juego>
+<!-- Mostrar procedimiento -->
+<div class="ui segment" *ngIf="jugando">
+    <div class="ui center aligned header"> Generación {{this.generacionActual}} </div>
+    <div class="ui center aligned container">
+        <div class="ui" *ngFor="let item of poblacionParaMostrar">
+            <div class="ui horizontal circular label"  
+                *ngFor="let color of item.combinacion" 
+                [ngClass]="color.nombre"
+            ></div>
         </div>
     </div>
-    <!-- Mostrar ganador -->
-    <div class="ui segment" *ngIf="hasGanado">
-        <app-informe-juego 
-            [combinacionGanadora]="ganador.combinacion"
-            [cantGeneraciones]="generacionActual"
-            ></app-informe-juego>
-    </div>
+</div>
+<!-- Mostrar ganador -->
+<div class="ui segment" *ngIf="hasGanado">
+    <app-informe-juego 
+        [combinacionGanadora]="ganador.combinacion"
+        [cantGeneraciones]="generacionActual"
+        ></app-informe-juego>
 </div>

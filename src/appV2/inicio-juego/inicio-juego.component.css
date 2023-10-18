@@ -1,10 +1,16 @@
-.spacing-xl{
-  margin-top: 56px;
-}
 
-.grande{
-  width: 64px !important;
-  height: 64px !important;
-  margin-left: 8px;
-  margin-right: 8px;
+.ui.label.massive{
+    gap: 10%;
+}
+.descripcion{
+  font-style: italic;
+  font-weight: lighter;
+}
+.selector{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+}
+.ui.button.bar{
+  margin-top: 2%;
 }
