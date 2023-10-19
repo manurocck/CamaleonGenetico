@@ -13,4 +13,6 @@ export class InformeJuegoComponent implements OnInit {
 
   @Input() combinacionGanadora : Color[] = [];
   @Input() cantGeneraciones : number = 0;
+  @Input() hasGanado : boolean = false;
+  @Input() jugando : boolean = false;
 }

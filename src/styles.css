@@ -9,6 +9,10 @@ body{
   margin-top: 2%;
 }
 
+.pt-5{
+  padding-top: 5vh;
+}
+
 .segment{
   border-radius: 16px !important;
 }
@@ -33,6 +37,9 @@ body{
 .purple{
   color: #A78BFA !important;
 }
+.white{
+  color: #FFFFFF !important;
+}
 .red-bg{
   background-color: #F87171 !important;
 }
@@ -50,4 +57,7 @@ body{
 }
 .purple-bg{
   background-color: #A78BFA !important;
+}
+.no-bg{
+  background-color: rgba(0,0,0,0) !important;
 }

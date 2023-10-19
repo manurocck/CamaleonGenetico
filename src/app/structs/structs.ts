@@ -1,29 +1,19 @@
-
 export interface Color {
   nombre: string;
   emoji: string;
 }
 
-export class CAMALEON_CONST {
-  public static amarillo : Color =  { nombre : 'yellow',    emoji : '🟡' };
-  public static azul : Color =      { nombre : 'blue',      emoji : '🔵' };
-  public static rojo : Color =      { nombre : 'red',       emoji : '🔴' };
-  public static verde : Color =     { nombre : 'green',     emoji : '🟢' };
-  public static lila : Color =      { nombre : 'purple',    emoji : '🟣' };
-  
-  public static colores : Color[] = [this.rojo, this.amarillo, this.verde, this.azul, this.lila];
-  public static combinacionDefault : Color[] = [this.rojo, this.amarillo, this.azul, this.amarillo, this.lila];
-}
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export class Genoma {
-  combinacion : Color[] = [];
+export class GenomaCamaleon {
+  combinacion: Color[] = [];
   aptitud: number = 0;
-  
-  actualizarAptitud(combinacionElegida : Color[]){
+
+  actualizarAptitud(combinacionElegida: Color[]) {
     this.aptitudPosicionCorrecta(combinacionElegida);
   }
   // Suma 1 a la aptitud por cada color que esté en la posición correcta
-  aptitudPosicionCorrecta(combinacionElegida : Color[]){
+  aptitudPosicionCorrecta(combinacionElegida: Color[]) {
     var aptitud = 0;
     combinacionElegida.forEach((color, index) => {
       if (this.combinacion[index] === color) {
@@ -34,4 +24,35 @@ export class Genoma {
   }
 
   // agregar aptitud por colores correctos
+}
+
+export interface GenomaAlgoritmo {
+  selectionIndex : number; // porcentaje que dejamos de la población anterior
+  mutationIndex : number ; // porcentaje de mutación
+  // crossOverIndex : number = 0.2; // porcentaje de cruce
+  aptitud : AptitudAlgoritmo;
+}
+export interface AptitudAlgoritmo {
+  totalGeneraciones: number; // total sum of generations
+  success: number; // total times the algorithm succeeded
+  // varianzaPromedioEntreGeneraciones: number; // variance between generations
+}
+
+export class CAMALEON_CONST {
+  public static amarillo: Color = { nombre: 'yellow', emoji: '🟡' };
+  public static naranja: Color = { nombre: 'orange', emoji: '🟠' };
+  public static azul: Color = { nombre: 'blue', emoji: '🔵' };
+  public static rojo: Color = { nombre: 'red', emoji: '🔴' };
+  public static verde: Color = { nombre: 'green', emoji: '🟢' };
+  public static lila: Color = { nombre: 'purple', emoji: '🟣' };
+
+  public static colores: Color[] = [
+    this.rojo,
+    this.naranja,
+    this.amarillo,
+    this.verde,
+    this.azul,
+    this.lila,
+  ];
+  public static combinacionDefault: Color[] = [];
 }
