@@ -1,0 +1,19 @@
+.giveSomeSpace{
+    margin-top: 2%;
+}
+
+.ui.card {
+    border-radius: 15vw;
+}
+.ui.card.solo{
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.ui.card.ai{
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.italics{
+  font-style: italic;
+  font-weight: lighter;
+}

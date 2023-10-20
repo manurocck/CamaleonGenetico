@@ -1,0 +1,31 @@
+<div class="ui centered aligned huge header italics">
+    <span class="red">Comb</span><span class="orange">ina</span><span class="yellow">cio</span><span class="green">nes </span><span class="blue">prob</span><span class="purple">adas</span>
+</div>
+<div #mt class="ui centered segment container">
+    <div class="ui two column stackable grid container">
+        <div class="ui two column doubling vertically divided grid container sixteen wide column">
+            <ng-container *ngFor="let intento of intentos; index as i">
+                <span class="row centered">
+                    <div class="four wide column ui grid center aligned">
+                        <div class="column large ui header"> 
+                            Intento {{intentos.length-i}}
+                        </div>
+                    </div>
+                    <div class="twelve wide column ui stackable grid center aligned">
+                        <div class="eight wide column">
+                            <a class="ui circular label small"
+                            *ngFor="let color of intento.combinacion; index as i" 
+                            [ngClass]="color.nombre + '-bg'"
+                            (click)="reintentar(intento.combinacion)"></a>
+                        </div>
+                        <div class="eight wide column">
+                            <div class="ui header">
+                                {{intento.aciertos}} aciertos
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </ng-container>
+        </div>
+    </div>
+</div>

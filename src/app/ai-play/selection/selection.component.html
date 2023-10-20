@@ -1,0 +1,20 @@
+<div class="ui centered segment container m-2">
+    <div class="ui two column stackable grid container">
+        <div class="sixteen wide column">
+            <div class="ui centered aligned huge header">
+                Seleccionando mejores individuos
+            </div>
+            <div class="ui center aligned container">
+                <div *ngFor="let genoma of poblacionParaMostrar.poblacion; index as i"  
+                        [ngClass]="{'purple-bg': poblacionParaMostrar.seleccionados.includes(i)}">
+
+                    <a class="ui circular label small"
+                        *ngFor="let elem of genoma.combinacion ; index as i" 
+                        [ngClass]="elem.nombre + '-bg'"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

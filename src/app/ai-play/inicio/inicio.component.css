@@ -1,0 +1,16 @@
+
+.ui.label.massive{
+    gap: 10%;
+}
+.descripcion{
+  font-style: italic;
+  font-weight: lighter;
+}
+.selector{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+}
+.ui.button.bar{
+  margin-top: 5%;
+}

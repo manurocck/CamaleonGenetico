@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Color } from '../structs/structs';
+import { Color, GenomaCamaleon } from '../structs/structs';
 
 @Component({
   selector: 'app-informe-juego',
@@ -13,4 +13,8 @@ export class InformeJuegoComponent implements OnInit {
 
   @Input() combinacionGanadora : Color[] = [];
   @Input() cantGeneraciones : number = 0;
+  @Input() hasGanado : boolean = false;
+  @Input() jugando : boolean = false;
+  @Input() poblacionParaMostrar : GenomaCamaleon[] = [];
+  @Input() generacionActual : number = 0;
 }

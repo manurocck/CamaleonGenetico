@@ -1,13 +1,57 @@
-<!-- Cambia de colores -->
-<div class="ui segment">
-    <div class="ui center aligned header"> El algoritmo adivinó tu combinación en {{cantGeneraciones}} generaciones </div>
-    <div class="ui center aligned small header"> Tu clave es la siguiente : </div>
-    <div class="ui center aligned container">
-        <div class="ui buttons">
-            <button class="ui button"  
-                *ngFor="let elem of combinacionGanadora" 
-                [ngClass]="elem.nombre"
-            ></button>
+<div class="ui two column stackable grid container">
+  <!-- Mostrar procedimiento -->
+  <div class="eight wide column">
+    <div class="ui center aligned container" *ngIf="jugando || hasGanado">
+      <div class="ui center aligned segment container">
+        <div class="ui header">Generación {{ this.generacionActual }}</div>
+        <div class="ui center aligned container">
+          <div class="ui" *ngFor="let item of poblacionParaMostrar">
+            <div
+              class="ui horizontal circular label"
+              *ngFor="let color of item.combinacion"
+              [ngClass]="color.nombre + '-bg'"
+            ></div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <!-- Mostrar ganador -->
+  <div class="wight wide column">
+    <!-- Informe final -->
+    <div
+      class="ui center aligned segment container"
+      *ngIf="!hasGanado && jugando"
+    >
+      <div class="ui active loader"></div>
+    </div>
+    <div class="ui center aligned segment container" *ngIf="hasGanado">
+      <div class="ui two column stackable grid">
+        <div class="six wide column">
+          <h3 class="ui center aligned small header">
+            El algoritmo adivinó tu combinación en:
+          </h3>
+        </div>
+        <div class="ten wide column">
+          <h2>{{ cantGeneraciones+1 }} generaciones</h2>
+        </div>
+      </div>
+      <div class="ui two column stackable grid">
+        <div class="six wide column">
+          <h3 class="ui center aligned small header">
+            Tu clave es la siguiente:
+          </h3>
+        </div>
+        <div class="ten wide column">
+          <div class="ui center aligned container">
+            <a
+              class="ui empty circular label large"
+              *ngFor="let elem of combinacionGanadora"
+              [ngClass]="elem.nombre + '-bg'"
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

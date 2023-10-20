@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { sleep } from '../structs/structs';
 
 @Component({
   selector: 'app-presentacion',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PresentacionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit(): void {
   }
 
+  async routeTo( route : string ){
+    // await sleep(150);
+    this.router.navigate([route]);
+  }
 }

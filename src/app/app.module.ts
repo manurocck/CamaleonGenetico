@@ -4,21 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PresentacionComponent } from './presentacion/presentacion.component';
-import { InicioJuegoComponent } from './inicio-juego/inicio-juego.component';
 import { InformeJuegoComponent } from './informe-juego/informe-juego.component';
+import { WidgetsModule } from './widgets/widgets.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     PresentacionComponent,
-    InicioJuegoComponent,
-    InformeJuegoComponent
+    InformeJuegoComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, WidgetsModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -5,8 +5,11 @@ body{
   /* Background color same visual studio gray*/
   background-color: #18181B;
 }
+.pt-5{
+  padding-top: 5% !important;
+}
 .m-2{
-  margin-top: 2%;
+  margin-top: 2% !important;
 }
 
 .segment{
@@ -17,6 +20,9 @@ body{
 
 .red{
   color: #F87171 !important;
+}
+.white{
+  color: #FFFFFF !important;
 }
 .orange{
   color: #fb923c !important;
@@ -39,6 +45,10 @@ body{
 .orange-bg{
   background-color: #fb923c !important;
 }
+#red-orange-bg{
+  background-color: #F87171 !important;
+  background-image: linear-gradient(to right, #F87171, #fb923c);
+}
 .yellow-bg{
   background-color: #FDE047 !important;
 }
@@ -50,4 +60,15 @@ body{
 }
 .purple-bg{
   background-color: #A78BFA !important;
+}
+#blue-purple-bg{
+  background-color: #38BDF8 !important;
+  background-image: linear-gradient(to right, #38BDF8, #A78BFA);
+}
+.grey-bg{
+  background-color: #4B5563 !important;
+}
+.white-bg{ 
+  /* same as semantic-ui's white */
+  background-color: #FFFFFF !important;
 }

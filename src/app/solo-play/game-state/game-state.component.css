@@ -1,0 +1,9 @@
+
+.italics{
+    font-style: italic;
+    font-weight: lighter;
+  }
+
+  .rounded{
+    border-radius: 65vw;
+  }

@@ -1,1 +1,28 @@
-<p>presentacion works!</p>
+<app-header></app-header>
+<div class="ui two column stackable grid container giveSomeSpace">
+    <div class="eight wide column">
+        <div class="ui centered card move left reveal ai">
+            <a class="visible content white-bg">
+                <div class="ui header center aligned">Adivina la clave</div>
+            </a>
+            <a id="red-orange-bg" class="hidden content" (click)="routeTo('/solo-play')">
+                <div class="ui header center aligned">¡Jugar!</div>
+            </a>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="ui centered card move right reveal solo">
+            <a class="visible content grey-bg">
+                <div class="header center aligned white">vs. AI</div>
+            </a>
+            <a id="blue-purple-bg" class="hidden content" (click)="routeTo('/ai-play')">
+                <div class="header center aligned">¿Estas seguro/a?</div>
+            </a>
+        </div>
+    </div>
+    <div class="sixteen wide column">
+        <div class="ui header inverted grey huge italics center aligned">
+            Elija un modo de juego para comenzar
+        </div>
+    </div>
+</div>

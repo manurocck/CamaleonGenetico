@@ -1,0 +1,31 @@
+<app-header></app-header>
+<!-- NEW -->
+<div class="ui center aligned container m-2">
+    <!-- Combinación elegida -->
+    <div class="ui center aligned text-secondary segment">
+        <div class="ui disabled header large descripcion" *ngIf="combinacionElegida.length==0">
+            Elija algún color para comenzar</div>
+        <a class="ui circular label huge"
+            *ngFor="let elem of combinacionElegida ; index as i" 
+            [ngClass]="elem.nombre + '-bg'"
+            (click)="eliminarColorSeleccionado(i)"
+            >
+        </a> 
+    </div>
+    <!-- Añadir colores -->
+    <div class="ui center aligned selector">
+        <a class="ui circular label massive selector"  
+        *ngFor="let elem of colores" 
+        [ngClass]="elem.nombre + '-bg'"
+        (click)="addColorSeleccionado(elem)"
+        >
+    </a>
+    </div>
+    <div class="ui primary button bar huge giveSomeSpace"
+        (click)="checkear()"
+        [ngClass]="{'disabled': jugando || (combinacionElegida.length!=claveRandom.length)}"
+        >
+        Adivinar
+    </div>
+</div>
+<app-game-state (reintento)="this.combinacionElegida=$event" class="m-2" [intentos]="intentos" *ngIf="intentos.length!=0"></app-game-state>
