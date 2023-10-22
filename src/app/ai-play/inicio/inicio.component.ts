@@ -88,6 +88,9 @@ export class InicioComponent {
       poblacionActual = poblacionNueva;
 
       configuracion.generacionActual++;
+      
+      this.jugando = true;
+
       await sleep(this.SLEEP_FACTOR*2000);
     }
     
