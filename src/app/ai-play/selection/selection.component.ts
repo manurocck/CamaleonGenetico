@@ -14,5 +14,4 @@ export class SelectionComponent implements OnInit {
   ngOnInit(): void { }
  
   @Input() poblacionParaMostrar: {poblacion: GenomaCamaleon[], seleccionados : number[]} = {poblacion: [], seleccionados: []};
-
 }

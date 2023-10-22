@@ -7,7 +7,15 @@
         </div>
         <div class="seven wide column">
             <div class="ui center aligned header">
-                aqui la vieja poblacion
+                Poblacion Seleccionada
+            </div>
+            <div class="ui center aligned container">
+                <div *ngFor="let genoma of poblacionParaMostrar.poblacion; index as i">
+                    <a class="ui circular label small"
+                    *ngFor="let elem of genoma.combinacion ; index as i" 
+                    [ngClass]="elem.nombre + '-bg'"
+                    ></a>
+                </div>
             </div>
         </div>
         <div class="two wide column">
@@ -17,7 +25,16 @@
         </div>
         <div class="seven wide column">
             <div class="ui center aligned header">
-                aqui la nueva
+                Poblacion Cruzada
+            </div>
+            <div class="ui center aligned container">
+                <div *ngFor="let genoma of poblacionCruzada; index as i">
+                    <a class="ui circular label small"
+                        *ngFor="let color of genoma.combinacion ; index as i" 
+                        [ngClass]="color.nombre + '-bg'"
+                        >
+                    </a>
+                </div>
             </div>
         </div>
     </div>

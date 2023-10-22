@@ -1,18 +1,28 @@
 <div class="ui centered segment container m-2">
     <div class="ui two column stackable grid container">
         <div class="sixteen wide column">
-            <div class="ui centered aligned huge header">
-                Seleccionando mejores individuos
+            <div class="row">
+                <div class="ui centered aligned huge header">
+                    Seleccionando mejores individuos
+                </div>
             </div>
-            <div class="ui center aligned container">
-                <div *ngFor="let genoma of poblacionParaMostrar.poblacion; index as i"  
-                        [ngClass]="{'purple-bg': poblacionParaMostrar.seleccionados.includes(i)}">
-
+            <div class="row ui three column doubling grid container">
+                <div class="column ui center aligned">
+                    <div *ngFor="let genoma of poblacionParaMostrar.poblacion; index as i"  
+                    [ngClass]="{'selected': poblacionParaMostrar.seleccionados[poblacionParaMostrar.seleccionados.length-1] == i }">
                     <a class="ui circular label small"
-                        *ngFor="let elem of genoma.combinacion ; index as i" 
-                        [ngClass]="elem.nombre + '-bg'"
-                        >
-                    </a>
+                    *ngFor="let elem of genoma.combinacion ; index as i" 
+                    [ngClass]="elem.nombre + '-bg'"
+                    ></a>
+                    </div>
+                </div>
+                <div class="column ui center aligned">
+                    <div *ngFor="let num of poblacionParaMostrar.seleccionados; index as i">
+                    <a class="ui circular label small"
+                    *ngFor="let elem of poblacionParaMostrar.poblacion[num]?.combinacion; index as i" 
+                    [ngClass]="elem.nombre + '-bg'"
+                    ></a>
+                    </div>
                 </div>
             </div>
         </div>

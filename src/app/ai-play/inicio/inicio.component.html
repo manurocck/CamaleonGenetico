@@ -28,18 +28,20 @@
         ¡ Jugar ! 
     </div>
 </div>
-<div class="pt-5" *ngIf="fase == 1">
-    <app-selection [poblacionParaMostrar]="poblacionParaMostrar">
-    </app-selection>
-</div>
-<div class="pt-5" *ngIf="fase == 2">
-    <app-crossover>
-    </app-crossover>
-</div>
-<div class="pt-5" *ngIf="fase == 3">
+<ng-container *ngIf="SLEEP_FACTOR != 0">
+    <div class="pt-5" *ngIf="fase == 1">
+        <app-selection [poblacionParaMostrar]="poblacionParaMostrar">
+        </app-selection>
+    </div>
+    <div class="pt-5" *ngIf="fase == 2">
+        <app-crossover [poblacionParaMostrar]="poblacionParaMostrar" [poblacionCruzada]="poblacionCruzadaParaMostrar">
+        </app-crossover>
+    </div>
+</ng-container>
+<!-- <div class="pt-5" *ngIf="fase == 3">
     <app-mutation>
     </app-mutation>
-</div>
+</div> -->
 <!-- 
 <app-informe-juego
     class="ui center aligned container pt-5"

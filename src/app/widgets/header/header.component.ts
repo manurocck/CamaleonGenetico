@@ -11,7 +11,5 @@ export class HeaderComponent implements OnInit {
   constructor(private router : Router) {}
   ngOnInit(): void {}
   
-  routeHome() {
-    return 'http://camaleongenetico.netlify.app';
-  }
+  routeHome() { this.router.navigate(['/']);}
 }

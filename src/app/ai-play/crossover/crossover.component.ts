@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { _FASE } from 'src/app/structs/structs';
+import { Component, Input, OnInit } from '@angular/core';
+import { GenomaCamaleon, _FASE } from 'src/app/structs/structs';
 
 @Component({
   selector: 'app-crossover',
@@ -12,4 +12,7 @@ export class CrossoverComponent implements OnInit {
    }
 
   ngOnInit(): void { }
+
+  @Input() poblacionParaMostrar: {poblacion: GenomaCamaleon[], seleccionados : number[]} = {poblacion: [], seleccionados: []};
+  @Input() poblacionCruzada: GenomaCamaleon[] = [];
 }
